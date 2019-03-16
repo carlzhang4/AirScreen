@@ -1,0 +1,9 @@
+*
+# 不忽略目录
+!*/
+# 不忽略文件.gitignore和*.foo
+!.gitignore
+!*.java
+!*AndroidManifest.xml
+!activity_main.xml
+!*.md
