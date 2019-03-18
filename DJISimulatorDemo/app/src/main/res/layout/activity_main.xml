@@ -34,230 +34,154 @@
             android:textSize="19sp" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_marginTop="70dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Simulator is off."
-        android:id="@+id/textview_simulator"/>
+
 
 
     <TextView
-        android:id="@+id/rotate_text"
+        android:id="@+id/text_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="310dp"
-        android:text="左旋：" />
+        android:layout_marginTop="250dp"
+        android:text="X:" />
 
     <TextView
-        android:id="@+id/vertical_text"
+        android:id="@+id/text_y"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="90dp"
-        android:layout_marginTop="310dp"
-        android:text="上升：" />
+        android:layout_marginTop="250dp"
+        android:text="Y:" />
 
     <TextView
-        android:id="@+id/forword_text"
+        android:id="@+id/text_z"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="160dp"
-        android:layout_marginTop="310dp"
-        android:text="前进：" />
+        android:layout_marginTop="250dp"
+        android:text="Z:" />
 
     <TextView
-        android:id="@+id/direction_text"
+        android:id="@+id/text_yaw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="230dp"
+        android:layout_marginTop="250dp"
+        android:text="YAW:" />
+
+
+
+    <EditText
+        android:id="@+id/edit_x"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_x"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="270dp"
+        android:text="0"
+        />
+
+    <EditText
+        android:id="@+id/edit_y"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_y"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="270dp"
+        android:text="0"
+        />
+
+    <EditText
+        android:id="@+id/edit_z"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_z"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="270dp"
+        android:text="3"
+        />
+
+    <EditText
+        android:id="@+id/edit_yaw"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_yaw"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="270dp"
+        android:text="0"
+        />
+
+
+    <TextView
+        android:id="@+id/text_pid_p"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_x"
         android:layout_marginTop="310dp"
-        android:text="左移：" />
-
-    <TextView
-        android:id="@+id/time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="310dp"
-        android:text="时间：" />
-
-    <EditText
-        android:id="@+id/rotate"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rotate_text"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="330dp"
-        android:text="0"
-        />
-
-    <EditText
-        android:id="@+id/vertical"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/vertical_text"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="330dp"
-        android:text="0"
-        />
-
-    <EditText
-        android:id="@+id/forword"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/forword_text"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="330dp"
-        android:text="0"
-        />
-
-    <EditText
-        android:id="@+id/direction"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/direction_text"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="330dp"
-        android:text="0"
-        />
-
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/time_text"
-        android:inputType="numberSigned|numberDecimal"
-        android:layout_marginTop="330dp"
-        android:text="0"
-        />
-
-    <TextView
-        android:id="@+id/period_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="370dp"
-        android:text="周期：" />
-
-    <EditText
-        android:id="@+id/period"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/rotate_text"
-        android:inputType="number"
-        android:layout_marginTop="390dp"
-        android:text="100"
-        />
-
-    <TextView
-        android:id="@+id/pid_text_p"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/vertical_text"
-        android:layout_marginTop="370dp"
         android:text="PID_P：" />
 
     <EditText
-        android:id="@+id/pid_p"
+        android:id="@+id/edit_pid_p"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/vertical_text"
-        android:inputType="number"
-        android:layout_marginTop="390dp"
+        android:layout_alignLeft="@+id/text_pid_p"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="330dp"
         android:text="1"
         />
 
     <TextView
-        android:id="@+id/pid_text_i"
+        android:id="@+id/text_pid_i"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/forword_text"
-        android:layout_marginTop="370dp"
+        android:layout_alignLeft="@+id/text_y"
+        android:layout_marginTop="310dp"
         android:text="PID_I：" />
 
     <EditText
-        android:id="@+id/pid_i"
+        android:id="@+id/edit_pid_i"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/forword_text"
-        android:inputType="number"
-        android:layout_marginTop="390dp"
-        android:text="1"
+        android:layout_alignLeft="@+id/text_pid_i"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="330dp"
+        android:text="0"
         />
 
     <TextView
-    android:id="@+id/pid_text_d"
+    android:id="@+id/text_pid_d"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/direction_text"
-    android:layout_marginTop="370dp"
+    android:layout_alignLeft="@+id/text_z"
+    android:layout_marginTop="310dp"
     android:text="PID_D：" />
 
     <EditText
-        android:id="@+id/pid_d"
+        android:id="@+id/edit_pid_d"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/direction_text"
-        android:inputType="number"
-        android:layout_marginTop="390dp"
-        android:text="1"
+        android:layout_alignLeft="@+id/text_pid_d"
+        android:inputType="numberSigned|numberDecimal"
+        android:layout_marginTop="330dp"
+        android:text="0"
         />
-
-    <TextView
-        android:id="@+id/reserve_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/time_text"
-        android:layout_marginTop="370dp"
-        android:text="保留：" />
-
-    <EditText
-        android:id="@+id/reserve_value"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/time_text"
-        android:inputType="number"
-        android:layout_marginTop="390dp"
-        android:text="1"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start mission"
-        style="@style/common_button"
-        android:id="@+id/start"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="440dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start Sensor"
+        android:text="start"
         style="@style/common_button"
-        android:id="@+id/Start_sensor_mode"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="500dp" />
+        android:id="@+id/btn_start"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="380dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calibrate Yaw"
         style="@style/common_button"
-        android:id="@+id/calibrate_yaw"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="560dp" />
-
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="stop"
-        style="@style/common_button"
-        android:id="@+id/stop"
-        android:layout_marginLeft="140dp"
+        android:id="@+id/btn_calibrate_yaw"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="440dp" />
 
     <Button
@@ -265,9 +189,29 @@
         android:layout_height="wrap_content"
         android:text="Init Base"
         style="@style/common_button"
-        android:id="@+id/btn_initBase"
-        android:layout_marginLeft="140dp"
+        android:id="@+id/btn_init_base"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="380dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="meassure"
+        style="@style/common_button"
+        android:id="@+id/btn_meassure"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="440dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="stop"
+        style="@style/common_button"
+        android:id="@+id/btn_stop"
+        android:textSize="40dp"
+        android:layout_marginLeft="240dp"
         android:layout_marginTop="500dp" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -276,32 +220,24 @@
         style="@style/common_button"
         android:id="@+id/btn_enable_sensor_mode"
         android:layout_marginLeft="240dp"
-        android:layout_marginTop="500dp" />
+        android:layout_marginTop="380dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="meassure"
-        style="@style/common_button"
-        android:id="@+id/btn_meassure"
-        android:layout_marginLeft="240dp"
-        android:layout_marginTop="440dp" />
+
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enable Virtual Stick"
+        android:text="Enable VS"
         style="@style/common_button"
         android:id="@+id/btn_enable_virtual_stick"
         android:layout_marginLeft="5dp"
-        android:layout_alignTop="@+id/textview_coordinate"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="120dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Disable Virtual Stick"
+        android:text="Disable VS"
         style="@style/common_button"
         android:id="@+id/btn_disable_virtual_stick"
         android:layout_below="@+id/btn_enable_virtual_stick"
@@ -316,29 +252,27 @@
         style="@style/common_button"
         android:id="@+id/btn_take_off"
         android:layout_alignTop="@+id/btn_disable_virtual_stick"
-        android:layout_alignStart="@+id/textview_coordinate"
+        android:layout_alignStart="@+id/textview_coordinate_current"
         android:layout_marginTop="0dp"
-        android:layout_alignEnd="@+id/textview_coordinate" />
+        android:layout_alignEnd="@+id/textview_coordinate_current" />
 
     <TextView
-        android:id="@+id/textview_coordinate"
+        android:id="@+id/textview_coordinate_current"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Coordinates"
+        android:text="coor_current"
         android:textSize="10dp"
-        android:layout_below="@+id/textview_simulator"
         android:layout_toEndOf="@+id/btn_enable_virtual_stick"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp" />
 
     <TextView
         android:id="@+id/textview_coordinate_goal"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Coordinates_Goal"
+        android:text="coor_goal"
         android:textSize="10dp"
-        android:layout_toEndOf="@+id/btn_enable_virtual_stick"
-        android:layout_marginTop="107dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="10dp" />
 
     <Button
@@ -355,11 +289,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sensor"
+        android:text="coor_sensor"
         android:id="@+id/textview_sensor_angle"
-        android:layout_alignTop="@+id/textview_coordinate"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/textview_coordinate"
+        android:textSize="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@id/textview_coordinate_current"
         android:layout_marginLeft="10dp" />
 
 

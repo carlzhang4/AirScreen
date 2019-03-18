@@ -15,7 +15,7 @@ public class CoordinateConversion {
         basePoint.longitude = longitude;
     }
 
-    public Coordinate convert(double longitude, double latitude, float altitude){
+    public Coordinate convert(double longitude, double latitude, float altitude, double yaw){
 
         current_point = new Coordinate();
         double angle_y = latitude - basePoint.latitude;
@@ -24,12 +24,14 @@ public class CoordinateConversion {
         current_point.y = R * Math.toRadians(angle_y);
         current_point.x = R_small * Math.toRadians(angle_x);
         current_point.z = altitude - basePoint.altitude;
+        current_point.o = yaw - 0;
         return current_point;
     }
 
     public class Coordinate{
         public double x,y;
         public float z;
+        public double o;
 
         public Coordinate(){
 
@@ -47,6 +49,7 @@ public class CoordinateConversion {
         public double latitude;
         public double longitude;
         public float altitude;
+        public float yaw;
     }
 }
 
