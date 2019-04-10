@@ -42,6 +42,7 @@ public class CoordinateConversion {
             z = (float)(radius * Math.sin(Math.toRadians(pitch)));
             x = r * Math.sin(Math.toRadians(azimuth));
             y = r * Math.cos(Math.toRadians(azimuth));
+            o = 0;
         }
     }
 

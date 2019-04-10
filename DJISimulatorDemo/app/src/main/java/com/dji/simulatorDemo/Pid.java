@@ -52,8 +52,8 @@ public class Pid {
 
         returnData.mYaw += (5 * ((delta_o-delta_o_1) + 0*delta_o + 0*(delta_o - 2*delta_o_1 +delta_o_2)))*(yawJoyControlMaxSpeed)/180;
         returnData.mThrottle += (0.3 * ((delta_z-delta_z_1) + 0*delta_z + 0*(delta_z - 2*delta_z_1 +delta_z_2)))*(verticalJoyControlMaxSpeed);
-        returnData.mRoll += (0.1 * ((delta_y-delta_y_1) + 0.012*delta_y + 0*(delta_y - 2*delta_y_1 +delta_y_2)))*(rollJoyControlMaxSpeed);
-        returnData.mPitch += (0.1 * ((delta_x-delta_x_1) + 0.012*delta_x + 0*(delta_x - 2*delta_x_1 +delta_x_2)))*(pitchJoyControlMaxSpeed);
+        returnData.mRoll += (pid_p * ((delta_y-delta_y_1) + 0.012*delta_y + 0*(delta_y - 2*delta_y_1 +delta_y_2)))*(rollJoyControlMaxSpeed);
+        returnData.mPitch += (pid_p * ((delta_x-delta_x_1) + 0.012*delta_x + 0*(delta_x - 2*delta_x_1 +delta_x_2)))*(pitchJoyControlMaxSpeed);
         return returnData;
     }
 

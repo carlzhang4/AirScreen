@@ -112,7 +112,7 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
     private double value_pid_i;
     private double value_pid_d;
 
-    double Radius = 3.0;
+    double Radius = 1.5;
     double delta_yaw = 0.0;
 
 
@@ -148,53 +148,53 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
         if(Enable_Sensor_Flag == true){
             mLocation = mState.getAircraftLocation();
             mAttitude = mState.getAttitude();
-            currentCoordinate = mConverter.convert(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude(),mAttitude.yaw);
+            //currentCoordinate = mConverter.convert(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude(),mAttitude.yaw);
             goalCoordinate = mConverter. new Coordinate(azimuth_phone+delta_yaw,pitch_phone,Radius);
-            mCoordinateGoal.setText("x：" + (double)Math.round(100*goalCoordinate.x)/100 + "\ny：" + (double)Math.round(100*goalCoordinate.y)/100 + "\nz：" + (double)Math.round(100*goalCoordinate.z)/100);
-
-            double delta_x = goalCoordinate.x - currentCoordinate.x;
-            double delta_y = goalCoordinate.y - currentCoordinate.y;
-            double delta_z = goalCoordinate.z - currentCoordinate.z;
-            double delta_o = mAttitude.yaw;
-            int x_flag;
-            int y_flag;
-            int z_flag;
-            int o_flag;
-            if(delta_x>0.3)
-                x_flag = 1;
-            else if(delta_x<-0.3)
-                x_flag = -1;
-            else x_flag = 0;
-
-            if(delta_y>0.3)
-                y_flag = 1;
-            else if(delta_y<-0.3)
-                y_flag = -1;
-            else y_flag = 0;
-
-            if(delta_z>0.1)
-                z_flag = 1;
-            else if(delta_z<-0.1)
-                z_flag = -1;
-            else z_flag = 0;
-
-            if(delta_o>5)
-                o_flag = 1;
-            else if(delta_o<-5)
-                o_flag = -1;
-            else o_flag = 0;
-
-//            mYaw = (float)(yawJoyControlMaxSpeed * o_flag * -1.0 * 0.2);
-//            mThrottle = (float)(verticalJoyControlMaxSpeed * z_flag * 0.05);
-//            mPitch = (float)(pitchJoyControlMaxSpeed * x_flag * 0.05);
-//            mRoll = (float)(rollJoyControlMaxSpeed * y_flag * 0.05);
-
-            if (null == mSendVirtualStickDataTimer) {
-                mSendVirtualStickDataTask = new SendVirtualStickDataTask();
-                mSendVirtualStickDataTimer = new Timer();
-                mSendVirtualStickDataTimer.schedule(mSendVirtualStickDataTask, 0, PERIOD);
-
-            }
+            //mCoordinateGoal.setText("x：" + (double)Math.round(100*goalCoordinate.x)/100 + "\ny：" + (double)Math.round(100*goalCoordinate.y)/100 + "\nz：" + (double)Math.round(100*goalCoordinate.z)/100);
+            updateGoalLoaction();
+//            double delta_x = goalCoordinate.x - currentCoordinate.x;
+//            double delta_y = goalCoordinate.y - currentCoordinate.y;
+//            double delta_z = goalCoordinate.z - currentCoordinate.z;
+//            double delta_o = mAttitude.yaw;
+//            int x_flag;
+//            int y_flag;
+//            int z_flag;
+//            int o_flag;
+//            if(delta_x>0.3)
+//                x_flag = 1;
+//            else if(delta_x<-0.3)
+//                x_flag = -1;
+//            else x_flag = 0;
+//
+//            if(delta_y>0.3)
+//                y_flag = 1;
+//            else if(delta_y<-0.3)
+//                y_flag = -1;
+//            else y_flag = 0;
+//
+//            if(delta_z>0.1)
+//                z_flag = 1;
+//            else if(delta_z<-0.1)
+//                z_flag = -1;
+//            else z_flag = 0;
+//
+//            if(delta_o>5)
+//                o_flag = 1;
+//            else if(delta_o<-5)
+//                o_flag = -1;
+//            else o_flag = 0;
+//
+////            mYaw = (float)(yawJoyControlMaxSpeed * o_flag * -1.0 * 0.2);
+////            mThrottle = (float)(verticalJoyControlMaxSpeed * z_flag * 0.05);
+////            mPitch = (float)(pitchJoyControlMaxSpeed * x_flag * 0.05);
+////            mRoll = (float)(rollJoyControlMaxSpeed * y_flag * 0.05);
+//
+//            if (null == mSendVirtualStickDataTimer) {
+//                mSendVirtualStickDataTask = new SendVirtualStickDataTask();
+//                mSendVirtualStickDataTimer = new Timer();
+//                mSendVirtualStickDataTimer.schedule(mSendVirtualStickDataTask, 0, PERIOD);
+//
+//            }
         }
     }
 
