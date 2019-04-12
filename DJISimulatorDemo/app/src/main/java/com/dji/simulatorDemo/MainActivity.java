@@ -28,6 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -60,6 +65,9 @@ import dji.sdk.useraccount.UserAccountManager;
 public class MainActivity extends Activity implements View.OnClickListener,SensorEventListener {
 
     private static final String TAG = "cjdebug";
+    static public Boolean Enable_recording = new Boolean(false);
+
+
 
     //The SDK Variables
     private FlightControllerState mState;
@@ -77,7 +85,6 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
 
     //UI Variables
     protected TextView mConnectStatusTextView;
-
     private TextView mTextView;
     private TextView mCoordinateCurrent;
     private TextView mSensorAngle;
@@ -95,9 +102,6 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
 
     //Personal
     final int PERIOD = 100;
-    private CoordinateConversion mConverter;
-    public CoordinateConversion.Coordinate currentCoordinate;
-    public CoordinateConversion.Coordinate goalCoordinate;
     private Timer mSendVirtualStickDataTimer;
     public Boolean Enable_Sensor_Flag = false;
     public Boolean Enable_Locating_Mode_Flag = false;
@@ -146,55 +150,8 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
         roll_phone = Math.toDegrees(values[2]);
         mSensorAngle.setText("Azimuth：" + (int)azimuth_phone + "\nPitch：" + (int)pitch_phone + "\nRoll：" + (int)roll_phone);
         if(Enable_Sensor_Flag == true){
-            mLocation = mState.getAircraftLocation();
-            mAttitude = mState.getAttitude();
-            //currentCoordinate = mConverter.convert(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude(),mAttitude.yaw);
-            goalCoordinate = mConverter. new Coordinate(azimuth_phone+delta_yaw,pitch_phone,Radius);
-            //mCoordinateGoal.setText("x：" + (double)Math.round(100*goalCoordinate.x)/100 + "\ny：" + (double)Math.round(100*goalCoordinate.y)/100 + "\nz：" + (double)Math.round(100*goalCoordinate.z)/100);
-            updateGoalLoaction();
-//            double delta_x = goalCoordinate.x - currentCoordinate.x;
-//            double delta_y = goalCoordinate.y - currentCoordinate.y;
-//            double delta_z = goalCoordinate.z - currentCoordinate.z;
-//            double delta_o = mAttitude.yaw;
-//            int x_flag;
-//            int y_flag;
-//            int z_flag;
-//            int o_flag;
-//            if(delta_x>0.3)
-//                x_flag = 1;
-//            else if(delta_x<-0.3)
-//                x_flag = -1;
-//            else x_flag = 0;
-//
-//            if(delta_y>0.3)
-//                y_flag = 1;
-//            else if(delta_y<-0.3)
-//                y_flag = -1;
-//            else y_flag = 0;
-//
-//            if(delta_z>0.1)
-//                z_flag = 1;
-//            else if(delta_z<-0.1)
-//                z_flag = -1;
-//            else z_flag = 0;
-//
-//            if(delta_o>5)
-//                o_flag = 1;
-//            else if(delta_o<-5)
-//                o_flag = -1;
-//            else o_flag = 0;
-//
-////            mYaw = (float)(yawJoyControlMaxSpeed * o_flag * -1.0 * 0.2);
-////            mThrottle = (float)(verticalJoyControlMaxSpeed * z_flag * 0.05);
-////            mPitch = (float)(pitchJoyControlMaxSpeed * x_flag * 0.05);
-////            mRoll = (float)(rollJoyControlMaxSpeed * y_flag * 0.05);
-//
-//            if (null == mSendVirtualStickDataTimer) {
-//                mSendVirtualStickDataTask = new SendVirtualStickDataTask();
-//                mSendVirtualStickDataTimer = new Timer();
-//                mSendVirtualStickDataTimer.schedule(mSendVirtualStickDataTask, 0, PERIOD);
-//
-//            }
+            CoordinateConversion.update_goal_coordinate(azimuth_phone+delta_yaw,pitch_phone,Radius);
+            updateGoalLoactionUI();
         }
     }
 
@@ -223,6 +180,8 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
         IntentFilter filter = new IntentFilter();
         filter.addAction(DJISimulatorApplication.FLAG_CONNECTION_CHANGE);
         registerReceiver(mReceiver, filter);
+        Tool.deletePath();
+
     }
 
 
@@ -291,13 +250,14 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
 
             case R.id.btn_init_base:{
                 mLocation = mState.getAircraftLocation();
-                mConverter = new CoordinateConversion(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude());
+                CoordinateConversion.setBasePoint(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude());
                 showToast("Init Success!");
                 break;
             }
 
             case R.id.btn_meassure:{
                 updateCurrentLoaction();
+                updateCurrentLoactionUI();
                 break;
             }
 
@@ -374,7 +334,7 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
                 break;
 
             case R.id.btn_start:{
-
+                Enable_recording = true;
                 try{
                     value_x = Float.valueOf(eX.getText().toString());
                     value_y = Float.valueOf(eY.getText().toString());
@@ -393,14 +353,8 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
                 pidController = new Pid(value_pid_p,value_pid_i,value_pid_d);
 
                 Enable_Locating_Mode_Flag = true;
-                if(goalCoordinate == null){
-                    goalCoordinate = mConverter. new Coordinate();
-                }
-                goalCoordinate.x = value_x;
-                goalCoordinate.y = value_y;
-                goalCoordinate.z = value_z;
-                goalCoordinate.o = value_yaw;
-                updateGoalLoaction();
+                CoordinateConversion.set_goal_coordinate(value_x,value_y,value_z,value_yaw);
+                updateGoalLoactionUI();
                 showToast("start success!");
                 if (null == mSendVirtualStickDataTimer) {
                     mSendVirtualStickDataTask = new SendVirtualStickDataTask();
@@ -411,7 +365,7 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
             }
             case R.id.btn_stop:{
 
-
+                Enable_recording = false;
                 Enable_Sensor_Flag = false;
                 Enable_Locating_Mode_Flag = false;
                 mYaw = 0;
@@ -439,7 +393,9 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
 
             if(Enable_Locating_Mode_Flag == true){
                 updateCurrentLoaction();
-                Pid.FlyingData returnValue = pidController.calculate(currentCoordinate,goalCoordinate);
+                updateCurrentLoactionUI();
+                Pid.FlyingData returnValue = pidController.calculate(CoordinateConversion.current_coordinate,CoordinateConversion.goal_coordinate);
+                Tool.save_type_one(returnValue);
                 mYaw = Math.min(returnValue.mYaw,Pid.yawJoyControlMaxSpeed);
                 mThrottle = Math.min(returnValue.mThrottle,Pid.verticalJoyControlMaxSpeed);
                 mPitch = Math.min(returnValue.mPitch,Pid.pitchJoyControlMaxSpeed);
@@ -465,31 +421,31 @@ public class MainActivity extends Activity implements View.OnClickListener,Senso
     }
 
     void updateCurrentLoaction(){
-        if(mConverter == null){
-            showToast("No base point!");
-        }
-        else{
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mLocation = mState.getAircraftLocation();
-                    mAttitude = mState.getAttitude();
-                    currentCoordinate = mConverter.convert(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude(),mAttitude.yaw);
-                    mCoordinateCurrent.setText("x：" + (double)Math.round(100*currentCoordinate.x)/100 + "\ny：" + (double)Math.round(100*currentCoordinate.y)/100 + "\nz：" + (double)Math.round(100*currentCoordinate.z)/100 + "\nyaw:"+currentCoordinate.o);
-                }
-            });
-        }
+        mLocation = mState.getAircraftLocation();
+        mAttitude = mState.getAttitude();
+        CoordinateConversion.update_current_coordinate(mLocation.getLongitude(),mLocation.getLatitude(),mLocation.getAltitude(),mAttitude.yaw);
     }
-    void updateGoalLoaction(){
+    void updateCurrentLoactionUI(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                mCoordinateGoal.setText("x：" + (double)Math.round(100*goalCoordinate.x)/100 + "\ny：" + (double)Math.round(100*goalCoordinate.y)/100 + "\nz：" + (double)Math.round(100*goalCoordinate.z)/100 + "\nyaw:"+goalCoordinate.o);
+                mCoordinateCurrent.setText("x：" + (double)Math.round(100*CoordinateConversion.current_coordinate.x)/100 + "\ny：" + (double)Math.round(100*CoordinateConversion.current_coordinate.y)/100 + "\nz：" + (double)Math.round(100*CoordinateConversion.current_coordinate.z)/100 + "\nyaw:"+CoordinateConversion.current_coordinate.o);
+            }
+        });
+    }
+    void updateGoalLoactionUI(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCoordinateGoal.setText("x：" + (double)Math.round(100*CoordinateConversion.goal_coordinate.x)/100 + "\ny：" + (double)Math.round(100*CoordinateConversion.goal_coordinate.y)/100 + "\nz：" + (double)Math.round(100*CoordinateConversion.goal_coordinate.z)/100 + "\nyaw:"+CoordinateConversion.goal_coordinate.o);
             }
         });
 
     }
+
+
+
+
 
 
     //Stable parts dont need to change at all***************************************************************************************************

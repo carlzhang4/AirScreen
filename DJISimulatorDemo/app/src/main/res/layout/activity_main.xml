@@ -78,7 +78,7 @@
         android:layout_alignLeft="@+id/text_x"
         android:inputType="numberSigned|numberDecimal"
         android:layout_marginTop="270dp"
-        android:text="0"
+        android:text="1"
         />
 
     <EditText
@@ -88,7 +88,7 @@
         android:layout_alignLeft="@+id/text_y"
         android:inputType="numberSigned|numberDecimal"
         android:layout_marginTop="270dp"
-        android:text="0"
+        android:text="1"
         />
 
     <EditText
@@ -98,7 +98,7 @@
         android:layout_alignLeft="@+id/text_z"
         android:inputType="numberSigned|numberDecimal"
         android:layout_marginTop="270dp"
-        android:text="2"
+        android:text="1"
         />
 
     <EditText
